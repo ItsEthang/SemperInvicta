@@ -1,6 +1,7 @@
 using UnityEngine;
 using UnityEngine.InputSystem;
 using TMPro;
+using System;
 public class PlayerController : MonoBehaviour
 {
     // Rigidbody of the player.
@@ -10,6 +11,7 @@ public class PlayerController : MonoBehaviour
     private float movementX;
     private float movementY;
     private int count;
+    private Boolean isVictory  = false;
     // Speed at which the player moves.
     public float speed = 0;
     public TextMeshProUGUI countText;
@@ -53,28 +55,24 @@ public class PlayerController : MonoBehaviour
             other.gameObject.SetActive(false);
             count += 1;
             SetCountText();
+            GameManager.Instance.PlayPickUpSound();
+        }
+        else if (other.CompareTag("Enemy"))
+        {
+            GameManager.Instance.PlayGameOverSound();
+
+            Destroy(gameObject);
+
+            winTextObject.gameObject.SetActive(true);
+            winTextObject.GetComponent<TextMeshProUGUI>().text = "You Lose!";
         }
     }
 
     void SetCountText()
     {
         countText.text = "Count: " + count.ToString();
-        if (count >= 5) {
+        if (count >= 5 && !isVictory) {
             TriggerVictory();
-        }
-    }
-
-    private void OnCollisionEnter(Collision collision)
-    {
-        if (collision.gameObject.CompareTag("Enemy"))
-        {
-            GameManager.Instance.PlayGameOverSound();
-            // Destroy the current object
-            Destroy(gameObject);
-            // Update the winText to display "You Lose!"
-            winTextObject.gameObject.SetActive(true);
-            winTextObject.GetComponent<TextMeshProUGUI>().text = "You Lose!";
-            
         }
     }
 
@@ -83,5 +81,6 @@ public class PlayerController : MonoBehaviour
         Destroy(GameObject.FindGameObjectWithTag("Enemy"));
         winTextObject.SetActive(true);
         GameManager.Instance.PlayVictorySound();
+        isVictory = true;
     }
 }

@@ -1,5 +1,6 @@
 using UnityEngine;
 using TMPro;
+using System;
 
 public class GameManager : MonoBehaviour
 {
@@ -8,6 +9,7 @@ public class GameManager : MonoBehaviour
     [SerializeField] private AudioSource audioSource;
     [SerializeField] private AudioClip gameOverSfx;
     [SerializeField] private AudioClip victorySfx;
+    [SerializeField] private AudioClip pickUpSfx;
 
     private void Awake()
     {
@@ -30,5 +32,10 @@ public class GameManager : MonoBehaviour
     public void PlayVictorySound()
     {
         audioSource.PlayOneShot(victorySfx);
+    }
+
+    public void PlayPickUpSound()
+    {
+        audioSource.PlayOneShot(pickUpSfx);
     }
 }
