@@ -14,6 +14,7 @@ GameObject:
   - component: {fileID: 941760107694126693}
   - component: {fileID: 1790786846932460420}
   - component: {fileID: 619358126376374268}
+  - component: {fileID: 2440511847740464802}
   m_Layer: 0
   m_Name: PickUp
   m_TagString: PickUp
@@ -153,3 +154,16 @@ Rigidbody:
   m_Interpolate: 0
   m_Constraints: 0
   m_CollisionDetection: 0
+--- !u!114 &2440511847740464802
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 733445990969330692}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: aefb3fcc41a9d46468a470624f0855a2, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::PickUp
+  pickupVFX: {fileID: 6369918121522389854, guid: 81fa985379f13b14b80fd35aa3dcbcca, type: 3}

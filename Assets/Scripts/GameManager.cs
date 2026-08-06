@@ -1,6 +1,7 @@
-using UnityEngine;
-using TMPro;
 using System;
+using TMPro;
+using UnityEngine;
+using UnityEngine.SceneManagement;
 
 public class GameManager : MonoBehaviour
 {
@@ -37,5 +38,10 @@ public class GameManager : MonoBehaviour
     public void PlayPickUpSound()
     {
         audioSource.PlayOneShot(pickUpSfx);
+    }
+
+    public void RestartGame()
+    {
+        SceneManager.LoadScene(SceneManager.GetActiveScene().buildIndex);
     }
 }

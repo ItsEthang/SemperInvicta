@@ -11,11 +11,13 @@ public class PlayerController : MonoBehaviour
     private float movementX;
     private float movementY;
     private int count;
+    private int winningCount;
     private Boolean isVictory  = false;
     // Speed at which the player moves.
     public float speed = 0;
     public TextMeshProUGUI countText;
     public GameObject winTextObject;
+    [SerializeField] private GameObject restartButton;
 
     // Start is called before the first frame update.
     void Start()
@@ -23,8 +25,10 @@ public class PlayerController : MonoBehaviour
         // Get and store the Rigidbody component attached to the player.
         rb = GetComponent<Rigidbody>();
         count = 0;
+        winningCount = 8;
         SetCountText();
         winTextObject.SetActive(false);
+        restartButton.SetActive(false);
     }
 
     // This function is called when a move input is detected.
@@ -52,7 +56,12 @@ public class PlayerController : MonoBehaviour
     {
         if (other.gameObject.CompareTag("PickUp"))
         {
-            other.gameObject.SetActive(false);
+            PickUp pickup = other.GetComponent<PickUp>();
+
+            if (pickup != null)
+            {
+                pickup.Collect();
+            }
             count += 1;
             SetCountText();
             GameManager.Instance.PlayPickUpSound();
@@ -65,13 +74,14 @@ public class PlayerController : MonoBehaviour
 
             winTextObject.gameObject.SetActive(true);
             winTextObject.GetComponent<TextMeshProUGUI>().text = "You Lose!";
+            restartButton.gameObject.SetActive(true);
         }
     }
 
     void SetCountText()
     {
         countText.text = "Count: " + count.ToString();
-        if (count >= 5 && !isVictory) {
+        if (count >= winningCount && !isVictory) {
             TriggerVictory();
         }
     }
@@ -80,6 +90,7 @@ public class PlayerController : MonoBehaviour
     {
         Destroy(GameObject.FindGameObjectWithTag("Enemy"));
         winTextObject.SetActive(true);
+        restartButton.gameObject.SetActive(true);
         GameManager.Instance.PlayVictorySound();
         isVictory = true;
     }
